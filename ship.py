@@ -15,7 +15,7 @@ class Ship():
         self.rect.centerx = self.screen_rect.centerx
         self.rect.bottom = self.screen_rect.bottom
 
-def blit(self):
-    """Draw the ship at it's current location"""
+    def blit(self):
+        """Draw the ship at it's current location"""
 
-    self.screen.blit(self.image, self.rect)
+        self.screen.blit(self.image, self.rect)
