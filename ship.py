@@ -5,6 +5,8 @@ class Ship():
 
     def __init__(self, screen):
         self.screen = screen
+        self.moving_right = False
+        self.moving_left = False
 
         # Load ship image and configure
         self.image = pygame.image.load("images/ship.bmp")
@@ -19,3 +21,11 @@ class Ship():
         """Draw the ship at it's current location"""
 
         self.screen.blit(self.image, self.rect)
+
+    def update(self):
+        """Update the ship's position according to movement settings"""
+
+        if self.moving_right:
+            self.rect.centerx += 1
+        if self.moving_left:
+            self.rect.centerx -= 1
