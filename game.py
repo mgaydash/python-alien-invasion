@@ -29,13 +29,7 @@ class Game():
         while True:
             self.check_events()
             self.ship.update()
-            self.bullets.update()
-
-            # Remove bullets that leave the top of the screen (y = 0)
-            for bullet in self.bullets.copy():
-                if bullet.rect.bottom <= 0:
-                    self.bullets.remove(bullet)
-
+            self.update_bullets()
             self.update_screen()
 
     def check_events(self):
@@ -50,22 +44,33 @@ class Game():
                 elif event.key == self.pygame.K_a:
                     self.ship.moving_left = True
                 elif event.key == self.pygame.K_SPACE:
-                    if len(self.bullets) < self.settings.bullets_allowed:
-                        self.bullets.add(Bullet(
-                            self.pygame,
-                            self.screen,
-                            self.ship,
-                            self.settings.bullet_width,
-                            self.settings.bullet_height,
-                            self.settings.bullet_color,
-                            self.settings.bullet_speed_factor
-                        ))
+                    self.fire_bullet()
             elif event.type == self.pygame.KEYUP:
                 if event.key == self.pygame.K_d:
                     self.ship.moving_right = False
                 elif event.key == self.pygame.K_a:
                     self.ship.moving_left = False
 
+    def fire_bullet(self):
+        if len(self.bullets) < self.settings.bullets_allowed:
+            self.bullets.add(Bullet(
+                self.pygame,
+                self.screen,
+                self.ship,
+                self.settings.bullet_width,
+                self.settings.bullet_height,
+                self.settings.bullet_color,
+                self.settings.bullet_speed_factor
+            ))
+
+    def update_bullets(self):
+        """Update bullet position and delete offscreen bullets"""
+
+        self.bullets.update()
+        # Remove bullets that leave the top of the screen (y = 0)
+        for bullet in self.bullets.copy():
+            if bullet.rect.bottom <= 0:
+                self.bullets.remove(bullet)
 
     def update_screen(self):
         """Update images on the screen and flip to the new screen"""
