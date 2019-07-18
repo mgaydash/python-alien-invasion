@@ -1,5 +1,8 @@
+from pygame.sprite import Group
+
 from settings import Settings
 from ship import Ship
+from bullet import Bullet
 
 class Game():
     def __init__(self, pygame, sys):
@@ -19,9 +22,20 @@ class Game():
         # Create ship
         self.ship = Ship(self.screen, self.settings.ship_speed_factor)
 
+        # Make bullet group
+        self.bullets = Group()
+
         # Main game loop
         while True:
             self.check_events()
+            self.ship.update()
+            self.bullets.update()
+
+            # Remove bullets that leave the top of the screen (y = 0)
+            for bullet in self.bullets.copy():
+                if bullet.rect.bottom <= 0:
+                    self.bullets.remove(bullet)
+
             self.update_screen()
 
     def check_events(self):
@@ -35,6 +49,17 @@ class Game():
                     self.ship.moving_right = True
                 elif event.key == self.pygame.K_a:
                     self.ship.moving_left = True
+                elif event.key == self.pygame.K_SPACE:
+                    if len(self.bullets) < self.settings.bullets_allowed:
+                        self.bullets.add(Bullet(
+                            self.pygame,
+                            self.screen,
+                            self.ship,
+                            self.settings.bullet_width,
+                            self.settings.bullet_height,
+                            self.settings.bullet_color,
+                            self.settings.bullet_speed_factor
+                        ))
             elif event.type == self.pygame.KEYUP:
                 if event.key == self.pygame.K_d:
                     self.ship.moving_right = False
@@ -47,8 +72,9 @@ class Game():
 
         # Draw on screen
         self.screen.fill(self.settings.bg_color)
-        self.ship.update()
         self.ship.blit()
+        for bullet in self.bullets.sprites():
+            bullet.blit()
 
         # This (oddly named) method draws the screen
         self.pygame.display.flip()
