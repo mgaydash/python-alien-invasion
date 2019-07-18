@@ -17,7 +17,7 @@ class Game():
         self.pygame.display.set_caption(self.settings.title)
 
         # Create ship
-        self.ship = Ship(self.screen)
+        self.ship = Ship(self.screen, self.settings.ship_speed_factor)
 
         # Main game loop
         while True:

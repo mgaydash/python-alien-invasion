@@ -3,8 +3,9 @@ import pygame
 class Ship():
     """The ship controlled by the user"""
 
-    def __init__(self, screen):
+    def __init__(self, screen, speed):
         self.screen = screen
+        self.speed = speed
         self.moving_right = False
         self.moving_left = False
 
@@ -16,6 +17,7 @@ class Ship():
         # Configure the ship's starting postition
         self.rect.centerx = self.screen_rect.centerx
         self.rect.bottom = self.screen_rect.bottom
+        self.center = float(self.rect.centerx)
 
     def blit(self):
         """Draw the ship at it's current location"""
@@ -26,6 +28,8 @@ class Ship():
         """Update the ship's position according to movement settings"""
 
         if self.moving_right:
-            self.rect.centerx += 1
+            self.center += self.speed
         if self.moving_left:
-            self.rect.centerx -= 1
+            self.center -= self.speed
+
+        self.rect.centerx = self.center
