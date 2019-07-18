@@ -27,9 +27,9 @@ class Ship():
     def update(self):
         """Update the ship's position according to movement settings"""
 
-        if self.moving_right:
+        if self.moving_right and self.rect.right < self.screen_rect.right:
             self.center += self.speed
-        if self.moving_left:
+        if self.moving_left and self.rect.left > self.screen_rect.left:
             self.center -= self.speed
 
         self.rect.centerx = self.center
