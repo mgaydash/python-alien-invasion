@@ -1,21 +1,24 @@
-from settings import Settings
 from ship import Ship
 from bullet import Bullet
 
 class Game():
+    screen_width = 1200
+    screen_height = 800
+    bg_color = (230, 230, 230)
+    title = "Alien Invasion"
+
     def __init__(self, pygame, sys):
         self.pygame = pygame
         self.sys = sys
-        self.settings = Settings()
 
     def run(self):
         # Initialize the game and create our screen object
         self.pygame.init()
         self.screen = self.pygame.display.set_mode((
-            self.settings.screen_width, 
-            self.settings.screen_height
+            Game.screen_width, 
+            Game.screen_height
         ))
-        self.pygame.display.set_caption(self.settings.title)
+        self.pygame.display.set_caption(Game.title)
 
         # Create ship
         self.ship = Ship(self.pygame)
@@ -25,7 +28,7 @@ class Game():
             self.check_events()
 
             # Draw on screen
-            self.screen.fill(self.settings.bg_color)
+            self.screen.fill(Game.bg_color)
 
             self.ship.update()
 
