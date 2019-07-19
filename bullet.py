@@ -3,26 +3,33 @@ from pygame.sprite import Sprite
 class Bullet(Sprite):
     """Bullet fired from the ship"""
 
-    def __init__(self, pygame, screen, ship, width, height, color, speed):
+    speed = 1
+    width = 3
+    height = 15
+    color = 60, 60, 60
+    bullets_allowed = 3
+
+    def __init__(self, pygame, screen, bullets, centerx, top):
         super().__init__()
         self.pygame = pygame
         self.screen = screen
-        self.color = color
-        self.speed = speed
+        self.bullets = bullets
 
         # Create a bullet and set start position
-        self.rect = pygame.Rect(0, 0, width, height)
-        self.rect.centerx = ship.rect.centerx
-        self.rect.top = ship.rect.top
+        self.rect = pygame.Rect(0, 0, Bullet.width, Bullet.height)
+        self.rect.centerx = centerx
+        self.rect.top = top
 
         self.y = float(self.rect.y)
 
-    def blit(self):
-        """Draw the bullet on the screen at it's current position"""
-        self.pygame.draw.rect(self.screen, self.color, self.rect)
-
     def update(self):
-        """Update the bullet's position according to movement settings"""
+        """Update the bullet's position and draw"""
 
-        self.y -= self.speed
+        self.y -= Bullet.speed
         self.rect.y = self.y
+
+        # Remove bullets that leave the top of the screen (y = 0)
+        if self.rect.bottom <= 0:
+            self.bullets.remove(self)
+
+        self.pygame.draw.rect(self.screen, self.color, self.rect)

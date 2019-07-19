@@ -18,7 +18,7 @@ class Game():
         self.pygame.display.set_caption(self.settings.title)
 
         # Create ship
-        self.ship = Ship(self.pygame, self.settings)
+        self.ship = Ship(self.pygame)
 
         # Main game loop
         while True:

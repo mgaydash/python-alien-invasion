@@ -5,11 +5,12 @@ from bullet import Bullet
 class Ship():
     """The ship controlled by the user"""
 
-    def __init__(self, pygame, settings):
+    bullets_allowed = 3
+    speed = 1.5
+
+    def __init__(self, pygame):
         self.pygame = pygame
-        self.settings = settings
         self.screen = self.pygame.display.get_surface()
-        self.speed = self.settings.ship_speed_factor
         self.moving_right = False
         self.moving_left = False
 
@@ -27,6 +28,8 @@ class Ship():
         self.center = float(self.rect.centerx)
 
     def handle_event(self, event):
+        """Respond to events such as user input"""
+
         if event.type == self.pygame.KEYDOWN:
             if event.key == self.pygame.K_SPACE:
                 self.fire_bullet()
@@ -45,15 +48,13 @@ class Ship():
     def fire_bullet(self):
         """Fire a bullet"""
         
-        if len(self.bullets) < self.settings.bullets_allowed:
+        if len(self.bullets) < Ship.bullets_allowed:
             self.bullets.add(Bullet(
                 self.pygame,
                 self.screen,
-                self,
-                self.settings.bullet_width,
-                self.settings.bullet_height,
-                self.settings.bullet_color,
-                self.settings.bullet_speed_factor
+                self.bullets,
+                self.rect.centerx,
+                self.rect.top
             ))
 
     def update(self):
@@ -61,22 +62,13 @@ class Ship():
 
         # Update location according to movement settings
         if self.moving_right and self.rect.right < self.screen_rect.right:
-            self.center += self.speed
+            self.center += Ship.speed
         if self.moving_left and self.rect.left > self.screen_rect.left:
-            self.center -= self.speed
+            self.center -= Ship.speed
         self.rect.centerx = self.center
 
-        # Update bullet locations
+        # Update and draw bullets
         self.bullets.update()
-
-        # Remove bullets that leave the top of the screen (y = 0)
-        for bullet in self.bullets.copy():
-            if bullet.rect.bottom <= 0:
-                self.bullets.remove(bullet)
-
-        # Draw bullets
-        for bullet in self.bullets.sprites():
-            bullet.blit()
 
         # Draw
         self.screen.blit(self.image, self.rect)
