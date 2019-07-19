@@ -1,5 +1,6 @@
 from ship import Ship
 from bullet import Bullet
+from alien import Alien
 
 class Game():
     screen_width = 1200
@@ -20,8 +21,8 @@ class Game():
         ))
         self.pygame.display.set_caption(Game.title)
 
-        # Create ship
         self.ship = Ship(self.pygame)
+        self.alien = Alien(self.pygame)
 
         # Main game loop
         while True:
@@ -31,6 +32,7 @@ class Game():
             self.screen.fill(Game.bg_color)
 
             self.ship.update()
+            self.alien.update()
 
             # This (oddly named) method draws the screen
             self.pygame.display.flip()
