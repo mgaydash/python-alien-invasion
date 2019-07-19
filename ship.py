@@ -14,10 +14,10 @@ class Ship():
         self.moving_right = False
         self.moving_left = False
 
-        # Make bullet group
+        # Bullet group to track fired bullets
         self.bullets = Group()
 
-        # Load ship image and configure
+        # Load ship image and get related info
         self.image = self.pygame.image.load("images/ship.bmp")
         self.rect = self.image.get_rect()
         self.screen_rect = self.screen.get_rect()
@@ -33,7 +33,6 @@ class Ship():
         if event.type == self.pygame.KEYDOWN:
             if event.key == self.pygame.K_SPACE:
                 self.fire_bullet()
-
             if event.key == self.pygame.K_d:
                 self.moving_right = True
             elif event.key == self.pygame.K_a:

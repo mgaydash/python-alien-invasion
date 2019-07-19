@@ -5,7 +5,7 @@ class Alien():
         self.pygame = pygame
         self.screen = self.pygame.display.get_surface()
 
-        # Load alien image and configure
+        # Load alien image get related info
         self.image = self.pygame.image.load("images/alien.bmp")
         self.rect = self.image.get_rect()
         self.screen_rect = self.screen.get_rect()
