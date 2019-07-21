@@ -56,6 +56,9 @@ class Ship():
                 self.rect.top
             ))
 
+    def get_height(self):
+        return self.rect.height
+
     def update(self):
         """Update the ship's position and draw"""
 

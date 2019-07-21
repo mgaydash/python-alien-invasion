@@ -3,7 +3,7 @@ from pygame.sprite import Sprite
 class Alien(Sprite):
     """Enemy alien spaceship"""
 
-    def __init__(self, pygame, x_location):
+    def __init__(self, pygame, x_location, y_location):
         super().__init__()
         self.pygame = pygame
         self.screen = self.pygame.display.get_surface()
@@ -15,10 +15,15 @@ class Alien(Sprite):
 
         # Configure the alien's starting position
         self.rect.x = x_location
-        self.rect.y = self.rect.height
+        self.rect.y = y_location
 
         # Store the x location as a float
         self.x = float(self.rect.x)
+
+    def get_height(self):
+        """Return the height of the alien sprite"""
+
+        return self.rect.height
 
     def get_width(self):
         """Return the width of the alien sprite"""

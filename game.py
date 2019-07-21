@@ -53,16 +53,24 @@ class Game():
         """Create a full fleet of aliens"""
 
         # Create an example alien to use for measurment
-        alien = Alien(self.pygame, 0)
-        alien_width = alien.get_width()
+        alien = Alien(self.pygame, 0, 0)
 
         # Want to allow padding of 2 * the sprite width
-        available_space_x = Game.screen_width - 2 * alien_width
+        available_space_x = Game.screen_width - 2 * alien.get_width()
 
         # How many aliens can we fit? Allow padding between of 1 alien width
-        num_aliens_x = int(available_space_x / (2 * alien_width))
+        num_aliens_x = int(available_space_x / (2 * alien.get_width()))
+
+        # How much height do we have to work with?
+        # Screen height - 2 aliens of space at the bottom and one at the top - ship height
+        available_space_y = Game.screen_height - 3 * alien.get_height() - self.ship.get_height()
+
+        # Allow padding between rows of 1 alien height
+        num_rows = int(available_space_y / (2 * alien.get_height()))
 
         # Create rows of aliens
-        for alien_num in range(num_aliens_x):
-            alien_x = alien_width + 2 * alien_width * alien_num
-            self.aliens.add(Alien(self.pygame, alien_x))
+        for row_num in range(num_rows):
+            for alien_num in range(num_aliens_x):
+                alien_x = alien.get_width() + 2 * alien.get_width() * alien_num
+                alien_y = alien.get_height() + 2 * alien.get_height() * row_num
+                self.aliens.add(Alien(self.pygame, alien_x, alien_y))
