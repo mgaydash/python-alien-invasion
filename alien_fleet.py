@@ -25,8 +25,20 @@ class AlienFleet():
                 alien_y = alien.get_height() + 2 * alien.get_height() * row_num
                 self.aliens.add(Alien(self.pygame, alien_x, alien_y))
 
+    def change_direction(self):
+        """Change the direction of all aliens in the fleet"""
+
+        for alien in self.aliens.sprites():
+            alien.change_direction()
+            alien.drop()
+
     def update(self):
         """Update the aliens' position and draw"""
+
+        for alien in self.aliens.sprites():
+            if alien.check_edges():
+                self.change_direction()
+                break
 
         self.aliens.update()
         
