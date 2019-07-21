@@ -3,6 +3,8 @@ from pygame.sprite import Sprite
 class Alien(Sprite):
     """Enemy alien spaceship"""
 
+    speed = 1
+
     def __init__(self, pygame, x_location, y_location):
         super().__init__()
         self.pygame = pygame
@@ -32,6 +34,9 @@ class Alien(Sprite):
 
     def update(self):
         """Update the alien's position and draw"""
+
+        self.x += Alien.speed
+        self.rect.x = self.x
 
         # Draw
         self.screen.blit(self.image, self.rect)
