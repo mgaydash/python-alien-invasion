@@ -32,6 +32,11 @@ class AlienFleet():
             alien.change_direction()
             alien.drop()
 
+    def handle_collisions(self, bullets):
+        """Detect collisions between aliens and bullets. Remove both."""
+
+        self.pygame.sprite.groupcollide(bullets, self.aliens, True, True)
+
     def update(self):
         """Update the aliens' position and draw"""
 

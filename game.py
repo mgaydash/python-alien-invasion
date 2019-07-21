@@ -41,6 +41,7 @@ class Game():
             self.screen.fill(Game.bg_color)
 
             self.ship.update()
+            self.fleet.handle_collisions(self.ship.get_bullets())
             self.fleet.update()
 
             # This (oddly named) method draws the screen

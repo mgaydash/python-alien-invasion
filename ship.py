@@ -56,6 +56,11 @@ class Ship():
                 self.rect.top
             ))
 
+    def get_bullets(self):
+        """Return a reference to the bullets collection"""
+
+        return self.bullets
+
     def get_height(self):
         return self.rect.height
 
