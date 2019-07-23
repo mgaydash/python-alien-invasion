@@ -32,8 +32,17 @@ class AlienFleet():
             alien.change_direction()
             alien.drop()
 
+    def check_bottom(self):
+        """Return True if an alien is at the bottom of the screen"""
+
+        for alien in self.aliens.sprites():
+            if alien.check_bottom():
+                return True
+
+        return False
+
     def check_ship_collision(self, ship):
-        """Return True|False if an alien has collided with the ship"""
+        """Return True if an alien has collided with the ship"""
 
         return self.pygame.sprite.spritecollideany(ship, self.aliens)
 

@@ -31,6 +31,12 @@ class Alien(Sprite):
 
         self.direction *= -1
 
+    def check_bottom(self):
+        """Return True if the ship is at the bottom of the screen"""
+
+        if self.rect.bottom >= self.screen_rect.bottom:
+            return True
+
     def check_edges(self):
         """Return True if this Alien is at the edge of the screen"""
 

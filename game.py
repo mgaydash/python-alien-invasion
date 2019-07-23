@@ -60,7 +60,7 @@ class Game():
                 self.fleet = AlienFleet(self.pygame, available_space_x, available_space_y)
 
             # Handle aliens colliding with the ship
-            if self.fleet.check_ship_collision(self.ship):
+            if self.fleet.check_ship_collision(self.ship) or self.fleet.check_bottom():
                 self.lives -= 1
 
                 # Reset the ship and fleet, redraw
