@@ -11,9 +11,11 @@ class Game():
     bg_color = (230, 230, 230)
     title = "Alien Invasion"
 
-    def __init__(self, pygame, sys):
+    def __init__(self, pygame, sys, time):
         self.pygame = pygame
         self.sys = sys
+        self.time = time
+        self.lives = 3
 
     def check_events(self):
         """Respond to keypresses and mouse events"""
@@ -57,5 +59,25 @@ class Game():
             if 0 == self.fleet.get_remaining():
                 self.fleet = AlienFleet(self.pygame, available_space_x, available_space_y)
 
+            # Handle aliens colliding with the ship
+            if self.fleet.check_ship_collision(self.ship):
+                self.lives -= 1
+
+                # Reset the ship and fleet, redraw
+                self.fleet = AlienFleet(self.pygame, available_space_x, available_space_y)
+                self.ship = Ship(self.pygame)
+                self.pygame.display.flip()
+
+                # Pause the game for .5 sec so the restart is noticable
+                self.time.sleep(0.5)
+
+            # Draw the "hud"
+            self.update_hud()
+
             # This (oddly named) method draws the screen
             self.pygame.display.flip()
+
+    def update_hud(self):
+        font = self.pygame.font.SysFont("Courier", 24)
+        lives_text = font.render("Lives Remaining: " + str(self.lives), True, (4, 4, 4))
+        self.screen.blit(lives_text, (10, 10))

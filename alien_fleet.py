@@ -32,6 +32,11 @@ class AlienFleet():
             alien.change_direction()
             alien.drop()
 
+    def check_ship_collision(self, ship):
+        """Return True|False if an alien has collided with the ship"""
+
+        return self.pygame.sprite.spritecollideany(ship, self.aliens)
+
     def get_remaining(self):
         return len(self.aliens)
 
