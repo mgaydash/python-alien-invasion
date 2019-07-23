@@ -16,6 +16,7 @@ class Game():
         self.sys = sys
         self.time = time
         self.lives = 3
+        self.playing = False
 
     def check_events(self):
         """Respond to keypresses and mouse events"""
@@ -23,6 +24,9 @@ class Game():
         for event in self.pygame.event.get():
             if event.type == self.pygame.QUIT:
                 self.sys.exit()
+            elif event.type == self.pygame.KEYDOWN and not self.playing:
+                if event.key == self.pygame.K_RETURN:
+                    self.playing = True
             else:
                 self.ship.handle_event(event)
 
@@ -48,28 +52,41 @@ class Game():
         while True:
             self.check_events()
 
-            # Draw on screen
             self.screen.fill(Game.bg_color)
 
-            self.ship.update()
-            self.fleet.handle_collisions(self.ship.get_bullets())
-            self.fleet.update()
+            if self.playing:
+                self.ship.update()
+                self.fleet.handle_collisions(self.ship.get_bullets())
+                self.fleet.update()
 
-            # If the fleet has been destroyed, create a new fleet
-            if 0 == self.fleet.get_remaining():
-                self.fleet = AlienFleet(self.pygame, available_space_x, available_space_y)
+                # If the fleet has been destroyed, create a new fleet
+                if 0 == self.fleet.get_remaining():
+                    self.fleet = AlienFleet(self.pygame, available_space_x, available_space_y)
 
-            # Handle aliens colliding with the ship
-            if self.fleet.check_ship_collision(self.ship) or self.fleet.check_bottom():
-                self.lives -= 1
+                # Handle aliens colliding with the ship
+                if self.fleet.check_ship_collision(self.ship) or self.fleet.check_bottom():
+                    self.lives -= 1
 
-                # Reset the ship and fleet, redraw
-                self.fleet = AlienFleet(self.pygame, available_space_x, available_space_y)
-                self.ship = Ship(self.pygame)
-                self.pygame.display.flip()
+                    if 0 == self.lives:
+                        self.playing = False
+                        self.lives = 3
 
-                # Pause the game for .5 sec so the restart is noticable
-                self.time.sleep(0.5)
+                    # Reset the ship and fleet, redraw
+                    self.fleet = AlienFleet(self.pygame, available_space_x, available_space_y)
+                    self.ship = Ship(self.pygame)
+                    self.pygame.display.flip()
+
+                    # Pause the game for .5 sec so the restart is noticable
+                    self.time.sleep(0.5)
+            else:
+                font = self.pygame.font.SysFont("Courier", 36)
+                play_text = font.render("Press [ENTER] to play.", True, (4, 4, 4))
+                self.screen.blit(
+                    play_text, (
+                        Game.screen_width / 2 - play_text.get_width() / 2,
+                        Game.screen_height / 2 - play_text.get_height() / 2
+                    )
+                )
 
             # Draw the "hud"
             self.update_hud()
