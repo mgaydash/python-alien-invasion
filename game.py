@@ -78,6 +78,8 @@ class Game():
             self.pygame.display.flip()
 
     def update_hud(self):
+        """Draw information for the user on the screen"""
+
         font = self.pygame.font.SysFont("Courier", 24)
         lives_text = font.render("Lives Remaining: " + str(self.lives), True, (4, 4, 4))
         self.screen.blit(lives_text, (10, 10))
