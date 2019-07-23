@@ -3,7 +3,7 @@ from pygame.sprite import Sprite
 class Bullet(Sprite):
     """Bullet fired from the ship"""
 
-    speed = 1
+    speed = 3
     width = 3
     height = 15
     color = 60, 60, 60
