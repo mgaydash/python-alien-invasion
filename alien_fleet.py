@@ -32,6 +32,9 @@ class AlienFleet():
             alien.change_direction()
             alien.drop()
 
+    def get_remaining(self):
+        return len(self.aliens)
+
     def handle_collisions(self, bullets):
         """Detect collisions between aliens and bullets. Remove both."""
 

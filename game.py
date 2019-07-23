@@ -53,5 +53,9 @@ class Game():
             self.fleet.handle_collisions(self.ship.get_bullets())
             self.fleet.update()
 
+            # If the fleet has been destroyed, create a new fleet
+            if 0 == self.fleet.get_remaining():
+                self.fleet = AlienFleet(self.pygame, available_space_x, available_space_y)
+
             # This (oddly named) method draws the screen
             self.pygame.display.flip()
