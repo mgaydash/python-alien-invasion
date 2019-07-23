@@ -26,23 +26,6 @@ class Ship():
         self.rect.centerx = self.screen_rect.centerx
         self.rect.bottom = self.screen_rect.bottom
         self.center = float(self.rect.centerx)
-
-    def handle_event(self, event):
-        """Respond to events such as user input"""
-
-        if event.type == self.pygame.KEYDOWN:
-            if event.key == self.pygame.K_SPACE:
-                self.fire_bullet()
-            if event.key == self.pygame.K_d:
-                self.moving_right = True
-            elif event.key == self.pygame.K_a:
-                self.moving_left = True
-        elif event.type == self.pygame.KEYUP:
-            if event.key == self.pygame.K_d:
-                self.moving_right = False
-            elif event.key == self.pygame.K_a:
-                self.moving_left = False
-
     
     def fire_bullet(self):
         """Fire a bullet"""
@@ -79,3 +62,19 @@ class Ship():
 
         # Draw
         self.screen.blit(self.image, self.rect)
+
+    def handle_event(self, event):
+        """Respond to events such as user input"""
+
+        if event.type == self.pygame.KEYDOWN:
+            if event.key == self.pygame.K_SPACE:
+                self.fire_bullet()
+            if event.key == self.pygame.K_d:
+                self.moving_right = True
+            elif event.key == self.pygame.K_a:
+                self.moving_left = True
+        elif event.type == self.pygame.KEYUP:
+            if event.key == self.pygame.K_d:
+                self.moving_right = False
+            elif event.key == self.pygame.K_a:
+                self.moving_left = False

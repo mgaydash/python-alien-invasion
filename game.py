@@ -4,7 +4,7 @@ from bullet import Bullet
 from alien import Alien
 
 class Game():
-    """Top-level game class conteinint the main event loop"""
+    """Top-level game class containing the main event loop"""
 
     screen_width = 1200
     screen_height = 800
@@ -14,6 +14,15 @@ class Game():
     def __init__(self, pygame, sys):
         self.pygame = pygame
         self.sys = sys
+
+    def check_events(self):
+        """Respond to keypresses and mouse events"""
+
+        for event in self.pygame.event.get():
+            if event.type == self.pygame.QUIT:
+                self.sys.exit()
+            else:
+                self.ship.handle_event(event)
 
     def run(self):
         # Initialize the game and create our screen object
@@ -46,12 +55,3 @@ class Game():
 
             # This (oddly named) method draws the screen
             self.pygame.display.flip()
-
-    def check_events(self):
-        """Respond to keypresses and mouse events"""
-
-        for event in self.pygame.event.get():
-            if event.type == self.pygame.QUIT:
-                self.sys.exit()
-            else:
-                self.ship.handle_event(event)
