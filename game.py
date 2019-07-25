@@ -79,6 +79,7 @@ class Game():
                     # Pause the game for .5 sec so the restart is noticable
                     self.time.sleep(0.5)
             else:
+                # Draw the "Press Enter" text
                 font = self.pygame.font.SysFont("Courier", 36)
                 play_text = font.render("Press [ENTER] to play.", True, (4, 4, 4))
                 self.screen.blit(
