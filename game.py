@@ -31,6 +31,8 @@ class Game():
                 self.ship.handle_event(event)
 
     def run(self):
+        """Start the game"""
+        
         # Initialize the game and create our screen object
         self.pygame.init()
         self.screen = self.pygame.display.set_mode((
